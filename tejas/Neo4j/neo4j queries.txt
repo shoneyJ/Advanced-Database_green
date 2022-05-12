@@ -1,0 +1,108 @@
+// COUNTRY
+CREATE (cou1:Country { name: "Germany" })
+
+// STATE
+CREATE (sta1:State { name: "Hesse" })
+
+// CITY
+CREATE (cit1:City { name: "Mannheim" })
+
+// LOCATIONS
+CREATE (loc1:Location { name: "Lindehof" })
+CREATE (loc2:Location { name: "Quadrant" })
+
+// STREETS
+CREATE (str1:Street { name: "Hesse Street" })
+CREATE (str2:Street { name: "Glucksteinalle" })
+CREATE (str3:Street { name: "Meer Street, 7th Block" })
+CREATE (str4:Street { name: "Alpine street, HAL 2nd Stage" })
+
+// Creates Crossroads, roads, points of interest with package station names and services
+// Create relations
+
+CREATE (a:Crossroad {name:"A"})
+CREATE (b:Crossroad {name:"B"})
+CREATE (c:Crossroad {name:"C"})
+CREATE (d:Crossroad {name:"D"})
+CREATE (e:Crossroad {name:"E"})
+CREATE (f:Crossroad {name:"F"})
+CREATE (g:Crossroad {name:"G"})
+
+CREATE (a)-[:ROAD {cost:50}]->(b)
+CREATE (b)-[:ROAD {cost:60}]->(c)
+CREATE (c)-[:ROAD {cost:70}]->(d)
+CREATE (b)-[:ROAD {cost:20}]->(d)
+CREATE (c)-[:ROAD {cost:35}]->(e)
+CREATE (e)-[:ROAD {cost:45}]->(f)
+CREATE (f)-[:ROAD {cost:15}]->(g)
+
+// Parcel Stations
+CREATE (res1:Station { name: "M1 Mannheim" , id: "tnhfDv5Il8EaGSXZGiuQGg" , service:"International Delivery"})
+CREATE (res2:Station { name: "K7 Quadrant", id: "ssafDv5Il8EaGSXZGiuQGg" , service:"International"})
+CREATE (res3:Station { name: "U5 Quadrant", id: "adyfDv5Il8EaGSXZGiuQGg" , service:"Domestic"})
+CREATE (res4:Station { name: "T5 Hbf", id: "gtmfDv5Il8EaGSXZGiuQGg" , service:"EU"})
+CREATE (res5:Station { name: "U5 Heidelberg", id: "vinfDv5Il8EaGSXZGiuQGg" , service:"International"})
+CREATE (res6:Station { name: "K5", id: "devfDv5Il8EaGSXZGiuQGg" , service:"Domestic"})
+CREATE (res7:Station { name: "U5 Mannheim", id: "vsafDv5Il8EaGSXZGiuQGg" , service:"Domestic"})
+CREATE (res8:Station { name: "Junbusch", id: "sdnfDv5Il8EaGSXZGiuQGg" , service:"EU"})
+
+CREATE (a)-[:HAS_STATION {cost:0}]->(res1)
+CREATE (b)-[:HAS_STATION {cost:0}]->(res2)
+CREATE (c)-[:HAS_STATION {cost:0}]->(res3)
+CREATE (d)-[:HAS_STATION {cost:0}]->(res4)
+CREATE (a)-[:HAS_STATION {cost:0}]->(res5)
+
+// Parcel station DELIVERIES
+
+CREATE (P201801:Delivery {name: "Deliveries in Jan", year: "2018", month: "January"})
+CREATE (P201802:Delivery {name: "Deliveries in Feb", year: "2018", month: "February"})
+CREATE (P201803:Delivery {name: "Deliveries in Mar", year: "2018", month: "March"})
+CREATE (P201804:Delivery {name: "Deliveries in Apr", year: "2018", month: "April"})
+CREATE (P201805:Delivery {name: "Deliveries in May", year: "2018", month: "May"})
+CREATE (P201806:Delivery {name: "Deliveries in Jun", year: "2018", month: "June"})
+CREATE (P201807:Delivery {name: "Deliveries in Jul", year: "2018", month: "July"})
+CREATE (P201808:Delivery {name: "Deliveries in Aug", year: "2018", month: "August"})
+CREATE (P201809:Delivery {name: "Deliveries in Sep", year: "2018", month: "September"})
+CREATE (P201810:Delivery {name: "Deliveries in Oct", year: "2018", month: "October"})
+CREATE (P201811:Delivery {name: "Deliveries in Nov", year: "2018", month: "November"})
+CREATE (P201812:Delivery {name: "Deliveries in Dec", year: "2018", month: "December"})
+
+//Station - DELIVERIES RELATION
+// ASSUMPTION 1 - Both stations delivered on an average 30 orders per day.
+// ASSUMPTION 2 - Both stations have delivered previously to the destination address to which the order is to be delivered.
+MERGE (res6)-[:ON_TIME{total:24}]->(P201801)
+MERGE (res7)-[:ON_TIME{total:22}]->(P201801)
+MERGE (res6)-[:ON_TIME{total:20}]->(P201802)
+MERGE (res7)-[:ON_TIME{total:24}]->(P201802)
+MERGE (res6)-[:ON_TIME{total:24}]->(P201803)
+MERGE (res7)-[:ON_TIME{total:22}]->(P201803)
+MERGE (res6)-[:ON_TIME{total:24}]->(P201804)
+MERGE (res7)-[:ON_TIME{total:20}]->(P201804)
+MERGE (res6)-[:ON_TIME{total:24}]->(P201805)
+MERGE (res7)-[:ON_TIME{total:20}]->(P201805)
+MERGE (res6)-[:ON_TIME{total:21}]->(P201806)
+MERGE (res7)-[:ON_TIME{total:24}]->(P201806)
+MERGE (res6)-[:ON_TIME{total:24}]->(P201807)
+MERGE (res7)-[:ON_TIME{total:23}]->(P201807)
+MERGE (res6)-[:ON_TIME{total:24}]->(P201808)
+MERGE (res7)-[:ON_TIME{total:21}]->(P201808)
+MERGE (res6)-[:ON_TIME{total:24}]->(P201809)
+MERGE (res7)-[:ON_TIME{total:22}]->(P201809)
+MERGE (res6)-[:ON_TIME{total:22}]->(P201810)
+MERGE (res7)-[:ON_TIME{total:24}]->(P201810)
+MERGE (res6)-[:ON_TIME{total:24}]->(P201811)
+MERGE (res7)-[:ON_TIME{total:22}]->(P201811)
+MERGE (res6)-[:ON_TIME{total:23}]->(P201812)
+MERGE (res7)-[:ON_TIME{total:24}]->(P201812)
+
+// Services
+CREATE (cus1:Service { name: "International" })
+CREATE (cus2:Service { name: "Domestic" })
+CREATE (cus3:Service { name: "EU" })
+CREATE (cus4:Service { name: "Local" })
+
+// USER AT STREET
+MERGE (usr5) -[:IS_AT] -> (str4)
+
+MERGE (res8) -[:SERVES] -> (cus4) -[:AT_STREET] -> (str4) -[:AT_LOCATION] -> (loc2) -[:IN_CITY] -> (cit1) -[:IN_STATE] -> (sta1) -[:IN_COUNTRY] -> (cou1)
+
