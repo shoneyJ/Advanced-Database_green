@@ -14,25 +14,19 @@ var redisClient=redis.createClient();
 
 app.get('/loc', async (req, res) => {
   
-    await redisClient.connect();
+    await redisClient.connect().catch(error=>{});
     const posStack = [];
     let len = 0;
     const response = await redisClient.keys('*');    
     len = response.length;
     for (let x = 0; x < response.length; x++) {
         const position = JSON.parse(await redisClient.get(response[x]));
-
-        posStack.push(position);
-        console.log(posStack);
+        posStack.push(position);      
     }
     res.json(posStack);
     redisClient.disconnect();
    
 })
-
-
-
-
 // Start the Server
 http.listen(port, function () {
     console.log('Server Started. Listening on *:' + port);
