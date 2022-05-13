@@ -52,7 +52,7 @@
      var geometry={lat:geo[0].Coordinate.Latitude,    
                   lng: geo[0].Coordinate.Longitude
     }
-          // marker.setGeometry(geometry);   
+           marker.getGeometry().setGeometry(geometry);   
     }
     
 
