@@ -47,8 +47,24 @@
     map.addObject(marker);
 
 
-    function updateMarker(marker,geometry){
-          marker.setGeometry(geometry);   
+    function updateMarker(marker,cordinates){
+     var geo= JSON.parse(cordinates);
+     var geometry={lat:geo[0].Coordinate.Latitude,    
+                  lng: geo[0].Coordinate.Longitude
     }
-exports.updateMarker=updateMarker;
+          // marker.setGeometry(geometry);   
+    }
+    
+
+    fetch('/loc').then(response => response.json()).then(data => {
+      console.log(data);
+      var index = 0;
+    setInterval(function() {
+      if(index<data.length){
+      console.log(index);
+      updateMarker(marker,data[index]);
+      index++;
+      }
+      },5000);
+    });
      

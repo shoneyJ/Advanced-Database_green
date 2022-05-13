@@ -7,34 +7,31 @@ var port = process.env.PORT || 3000;
 var redis = require('redis');
 
 
-var myModule = require('./public/js/mymodule');
-
-console.log(`myModule: ${user}`);
-
-
 // Express Middleware
 app.use(express.static('public'));
 
-var redisSubscriber = redis.createClient();
+var redisClient=redis.createClient();
 
-// app.get('/loc', async (req, res) => {
+app.get('/loc', async (req, res) => {
   
-//     console.log(subscribe());
-//     // res.json(posStack);
+    await redisClient.connect();
+    const posStack = [];
+    let len = 0;
+    const response = await redisClient.keys('*');    
+    len = response.length;
+    for (let x = 0; x < response.length; x++) {
+        const position = JSON.parse(await redisClient.get(response[x]));
+
+        posStack.push(position);
+        console.log(posStack);
+    }
+    res.json(posStack);
+    redisClient.disconnect();
    
-// })
+})
 
-subscribe();
-async function subscribe(){
-    await redisSubscriber.connect().catch(error => {});
 
-    await redisSubscriber.subscribe('gpsone',(cordinate)=>{
-      
-        console.log(`User: ${user}`);
-        // updateCoordinate(JSON.parse(cordinate));
-    });
 
-}
 
 // Start the Server
 http.listen(port, function () {

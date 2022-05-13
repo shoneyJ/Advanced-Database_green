@@ -29,7 +29,7 @@ io.on('connection', function (socket) {
             await redisPublisher.connect().catch(error=>{});
          
            await redisPublisher.publish('gpsone', location);
-           await redisPublisher.disconnect();
+           
          })();
              
    });
