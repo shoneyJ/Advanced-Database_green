@@ -50,7 +50,7 @@ var map = ()=>{
     // Structure of the input Item
     var geo= JSON.parse(cordinate);  
     var featureToUpdate = marker;
-    var coord = ol.proj.fromLonLat([geo[0].Coordinate.Longitude, geo[0].Coordinate.Latitude]);
+    var coord = ol.proj.fromLonLat([geo[0].Coordinate.Latitude,geo[0].Coordinate.Longitude]);
     featureToUpdate.getGeometry().setCoordinates(coord);
 }
     

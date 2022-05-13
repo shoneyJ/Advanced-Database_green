@@ -7,7 +7,7 @@ async function subscribe(){
     await redisSubscriber.subscribe('gpsone',(cordinate)=>{
 
         (async () => {
-            var timestamp = new Date().getUTCMilliseconds();
+            var timestamp = Date.now();
             const client = redis.createClient();      
         client.on('error', (err) => console.log('Redis Client Error', err));      
         await client.connect();      
